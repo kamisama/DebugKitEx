@@ -6,8 +6,11 @@ It provides some additionals panels such as nosql (redis) queries logging and ca
 
 Requirements
 --
-* [CakePHP 1.3.x, 2.0.x, 2.1.x](http://http://cakephp.org/)
+* [CakePHP 2.2.0 or older](http://http://cakephp.org/)
 * [DebugKit Plugin](https://github.com/cakephp/debug_kit)
+
+For older cakephp, download the 1.3.x version
+
 
 Install
 --
@@ -42,8 +45,5 @@ The NoSql panel will only works with one of my other plugin, see its [page](http
 
 ##Changelog##
 
-####Ver 1.3.3#### (2012-07-01)
-* Change version naming convention. First two number reflect the minimum cakephp version, so version 1.3.x can be used with all cakephp > 1.3.x, until a new version is created. Version 2.2.x requires at least cakephp 2.2.x.
-
-####Ver 1.3.2#### (2012-04-22)
-* Add NoSql Panel
+####Ver 2.2.0 (2012-07-01)####
+* Update plugin for DebugKit 2.2 and for CakePHP 2.2 (requires at least cakephp 2.2)

@@ -97,6 +97,8 @@ class Cache {
  * The following keys are used in core cache engines:
  *
  * - `duration` Specify how long items in this cache configuration last.
+ * - `groups` List of groups or 'tags' associated to every key stored in this config.
+ *    handy for deleting a complete group from cache.
  * - `prefix` Prefix appended to all entries. Good for when you need to share a keyspace
  *    with either another cache config or another application.
  * - `probability` Probability of hitting a cache gc cleanup.  Setting to 0 will disable
@@ -220,7 +222,7 @@ class Cache {
  *
  * `Cache::set(null, 'my_config');`
  *
- * @param mixed $settings Optional string for simple name-value pair or array
+ * @param string|array $settings Optional string for simple name-value pair or array
  * @param string $value Optional for a simple name-value pair
  * @param string $config The configuration name you are changing. Defaults to 'default'
  * @return array Array of settings.
@@ -259,11 +261,12 @@ class Cache {
  *
  * Permanently remove all expired and deleted data
  *
- * @param string $config The config name you wish to have garbage collected. Defaults to 'default'
+ * @param string $config [optional] The config name you wish to have garbage collected. Defaults to 'default'
+ * @param integer $expires [optional] An expires timestamp. Defaults to NULL
  * @return void
  */
-	public static function gc($config = 'default') {
-		self::$_engines[$config]->gc();
+	public static function gc($config = 'default', $expires = null) {
+		self::$_engines[$config]->gc($expires);
 	}
 
 /**
@@ -466,7 +469,23 @@ class Cache {
 			return false;
 		}
 		$success = self::$_engines[$config]->clear($check);
-		self::__logActivity($config, 'clear', $key, $success);
+		self::__logActivity($config, 'clear', '', $success);
+		self::set(null, $config);
+		return $success;
+	}
+	
+/**
+ * Delete all keys from the cache belonging to the same group.
+ *
+ * @param string $group name of the group to be cleared
+ * @param string $config name of the configuration to use. Defaults to 'default'
+ * @return boolean True if the cache group was successfully cleared, false otherwise
+ */
+	public static function clearGroup($group, $config = 'default') {
+		if (!self::isInitialized($config)) {
+			return false;
+		}
+		$success = self::$_engines[$config]->clearGroup($group);
 		self::set(null, $config);
 		return $success;
 	}
@@ -511,7 +530,7 @@ class Cache {
 	{
 		self::$_logs[$config][] = array('type' => $type, 'key' => $key, 'success' => $success);
 		if (count(self::$_logs[$config]) > self::$_maxLogs) {
-			array_shift($this->_queriesLog);
+			array_shift(self::$_logs[$config]);
 		}
 	}
 	

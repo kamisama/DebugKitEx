@@ -17,6 +17,12 @@ Install
 
 ###Install the plugin###
 
+Add this plugin to the list that CakePHP loads.
+
+```php
+CakePlugin::load(array('DebugKit','DebugKitEx'));
+```
+
 Drop the *DebugKitEx* folder in you *app/Plugin* directory, and load the extended panel, by editing your debugkit call (in your *AppController.php* probably)
 
 ```php	

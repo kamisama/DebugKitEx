@@ -16,6 +16,12 @@
  * @license 	MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
+if (method_exists('CachePanel', 'getContent')) {
+	// we get the ALL of the Cache stats, including those needed to render the Views/Helpers/Elements
+	$content = CachePanel::getContent();
+	// TODO: any way to update the Panel Title from here?
+}
+
 ?>
 <h2><?php echo __d('debug_kit_ex', 'Cache Logs')?></h2>
 <?php if (isset($content['stats'])) : ?>

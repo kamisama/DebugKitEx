@@ -74,6 +74,8 @@ if (method_exists('CachePanel', 'getContent')) {
 				$totalTime = 0;
 				$totalRead = 0;
 				$totalWrite = 0;
+				$totalClear = 0;
+
 				foreach($datas['logs'] as $log)
 				{
 					echo '<tr class="' . (!$log['success'] ? 'missed' : '') . ' ' . $log['type'] . '">';

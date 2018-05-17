@@ -1,8 +1,8 @@
 {
-	"name": "kamisama/debug-kit-ex",
+	"name": "audiologyholdings/debug-kit-ex",
 	"description" : "An extension for CakePHP DebugKit plugin",
 	"keywords": ["cakephp", "debugkit"],
-	"homepage": "https://github.com/kamisama/DebugKitEx",
+	"homepage": "https://github.com/AudiologyHoldings/DebugKitEx",
 	"type": "cakephp-plugin",
 	"extra": {
 		"installer-name": "DebugKitEx"
@@ -20,9 +20,4 @@
 		"php": ">=5.3.0",
 		"composer/installers": "*"
 	},
-	"support": {
-		"email": "kami@kamisama.me",
-		"issues": "https://github.com/kamisama/DebugKitEx/issues",
-		"source": "https://github.com/kamisama/DebugKitEx"
-	}
 }

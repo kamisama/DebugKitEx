@@ -24,15 +24,15 @@ Either with `git clone` or by downloading the archive.
 ##### With Git clone
 
 	cd app/Plugin
-	git clone git://github.com/kamisama/DebugKitEx.git DebugKitEx
+	git clone git://github.com/AudiologyHoldings/DebugKitEx.git DebugKitEx
 	
 ##### Download the archive
 
-[Download](https://github.com/kamisama/DebugKitEx/zipball/master) the latest release, and uncompress it in `app/Plugin`. Make sure the plugin folder is named *DebugKitEx*.
+[Download](https://github.com/AudiologyHoldings/DebugKitEx/zipball/master) the latest release, and uncompress it in `app/Plugin`. Make sure the plugin folder is named *DebugKitEx*.
 
 ##### With composer
 
-Add `"kamisama/debug-kit-ex": "2.2.*""` to your composer dependencies, then run
+Add `"audiologyholdings/debug-kit-ex": "2.2.*""` to your composer dependencies, then run
 
 	composer install
 

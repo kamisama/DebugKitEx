@@ -76,7 +76,7 @@ tr.write td {
 	color: gray;
 }
 
-.label-read, .label-write {
+.label-read, .label-write, .label-clear {
 	color: #fff;
 	border-radius: 3px;
 	padding: 1px 4px 1px;
@@ -92,6 +92,10 @@ tr.write td {
 
 .label-write {
 	background-color: #6fa156;
+}
+
+.label-clear {
+	background-color: #8B56A0;
 }
 
 .table-summary td {

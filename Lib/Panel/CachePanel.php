@@ -30,6 +30,7 @@
  * @package DebugKitEx
  * @subpackage DebugKitEx.vendors
  */
+App::uses('DebugPanel', 'DebugKit.Lib');
 class CachePanel extends DebugPanel
 {
 
@@ -43,16 +44,52 @@ class CachePanel extends DebugPanel
 	 */
 	public $priority = 0;
 
+	/**
+	 *
+	 */
 	public $css = array('DebugKitEx.debug_kit_ex.css');
 
 
 	/**
 	 * Prepare output vars before Controller Rendering.
 	 *
+	 * Also sets the "title" for custom titling...
+	 *
 	 * @param object $controller Controller reference.
-	 * @return void
+	 * @return array $content (partial)
 	 */
 	public function beforeRender(Controller $controller) {
+
+		$content = array();
+
+		if (method_exists('Cache', 'getLogs')) {
+			$content['stats'] = Cache::getLogs();
+		}
+
+		if ($this->priority > 0 && isset($content['stats'])) {
+			if ($content['stats']['count'] === 0) {
+				$this->title = __d('debug_kit_ex', '<b>0</b> cache');
+			} else {
+				$this->title = __d('debug_kit_ex', '<b>%dms / %d</b> cache', round($content['stats']['time']), $content['stats']['count']['total']);
+			}
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Prepare output vars
+	 *
+	 * Split to static method because we have to call it FROM the View
+	 *   we will call this method from: View/Elements/cache_panel.ctp
+	 *
+	 * If we call it from beforeRender()
+	 *   we will miss all of the Cache calls in Views/Helpers/Elements
+	 *
+	 * @return array $content (complete)
+	 */
+	static function getContent() {
+
 		$configs = Cache::configured();
 		$content = array();
 
@@ -75,14 +112,7 @@ class CachePanel extends DebugPanel
 
 		ksort($content['cache']);
 
-		if ($this->priority > 0 && isset($content['stats'])) {
-			if ($content['stats']['count'] === 0) {
-				$this->title = __d('debug_kit_ex', '<b>0</b> cache');
-			} else {
-				$this->title = __d('debug_kit_ex', '<b>%dms / %d</b> cache', round($content['stats']['time']), $content['stats']['count']['total']);
-			}
-		}
-
 		return $content;
 	}
+
 }

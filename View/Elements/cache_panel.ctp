@@ -16,6 +16,12 @@
  * @license 	MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
+if (method_exists('CachePanel', 'getContent')) {
+	// we get the ALL of the Cache stats, including those needed to render the Views/Helpers/Elements
+	$content = CachePanel::getContent();
+	// TODO: any way to update the Panel Title from here?
+}
+
 ?>
 <h2><?php echo __d('debug_kit_ex', 'Cache Logs')?></h2>
 <?php if (isset($content['stats'])) : ?>
@@ -68,9 +74,14 @@
 				$totalTime = 0;
 				$totalRead = 0;
 				$totalWrite = 0;
+				$totalClear = 0;
+
 				foreach($datas['logs'] as $log)
 				{
-					echo '<tr class="' . (!$log['success'] ? 'missed' : '') . ' ' . $log['type'] . '">';
+					// Class = "clear" has special meaning in bootstrap, change to clear-row
+					$rowClass = $log['type'] == 'clear' ? 'clear-row' : $log['type'];
+
+					echo '<tr class="' . (!$log['success'] ? 'missed' : '') . ' ' . $rowClass . '">';
 					echo '<td class="type"><span class="label-'.$log['type'].'">'.$log['type'] .'</span></td>';
 					echo '<td>'.$log['key']. ($log['success'] ? '' : ' <span style="float:right">(missed)</span>') . '</td>';
 					echo '<td class="time">'. $log['time']. '</td>';
@@ -84,7 +95,8 @@
 				echo '<tr class="table-summary">';
 				echo '<td colspan=2>';
 				echo '<span class="label-read">'.$totalRead.'</span> ';
-				echo '<span class="label-write">'.$totalWrite.'</span>';
+				echo '<span class="label-write">'.$totalWrite.'</span> ';
+				echo '<span class="label-clear">'.$totalClear.'</span>';
 				echo '</td>';
 				echo '<td class="time">';
 				echo $totalTime;
